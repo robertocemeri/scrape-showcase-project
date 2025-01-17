@@ -44,4 +44,7 @@ This project is a web scraper designed to extract mobile subscription data from 
 ## Usage
 Run the scraper using the command:
 ```bash
-node src/scraper.js
+node src/scraper.js  -> for the api server http://localhost:3000/api/scrape-swisscom-mobile-subscriptions
+
+
+node src/run.js -> for running the script and you can check the returned data to scrapedData.json file 

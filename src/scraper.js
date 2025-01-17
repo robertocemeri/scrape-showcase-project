@@ -3,8 +3,9 @@ const { chromium: puppeteer } = require("playwright");
 const express = require("express");
 const app = express();
 const port = 3000;
+const fs = require("fs");
 
-async function scrapeSwisscomMobileSubscriptions() {
+const scrapeSwisscomMobileSubscriptions = async () => {
     const browser = await puppeteer.launch({
         // Keep the headless property false to see the browser in action
         headless: false,
@@ -136,6 +137,14 @@ async function scrapeSwisscomMobileSubscriptions() {
         });
 
         await browser.close();
+
+        //save to scrapedData.json
+        const data = JSON.stringify(returnData, null, 2);
+        fs.writeFile("scrapedData.json", data, (err) => {
+            if (err) throw err;
+            console.log("Data has been written to the file");
+        });
+
         return returnData;
 
     } catch (error) {
@@ -161,3 +170,8 @@ app.get("/api/scrape-swisscom-mobile-subscriptions", async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+module.exports = {
+    scrapeSwisscomMobileSubscriptions
+};
